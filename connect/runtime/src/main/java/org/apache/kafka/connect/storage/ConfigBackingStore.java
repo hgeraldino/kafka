@@ -135,7 +135,7 @@ public interface ConfigBackingStore {
          * Invoked when a connector configuration has been updated.
          * @param connector name of the connector
          */
-        void onConnectorConfigUpdate(String connector);
+        void onConnectorConfigUpdate(String connector, Map<String, String> currentConnectorConfig);
 
         /**
          * Invoked when task configs are updated.

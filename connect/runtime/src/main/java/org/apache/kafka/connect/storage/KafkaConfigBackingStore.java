@@ -846,6 +846,7 @@ public class KafkaConfigBackingStore implements ConfigBackingStore {
 
     private void processConnectorConfigRecord(String connectorName, SchemaAndValue value) {
         boolean removed = false;
+        Map<String, String> connectorConfig = null;
         synchronized (lock) {
             if (value.value() == null) {
                 // Connector deletion will be written as a null value
@@ -870,7 +871,7 @@ public class KafkaConfigBackingStore implements ConfigBackingStore {
                 log.debug("Updating configuration for connector '{}'", connectorName);
                 @SuppressWarnings("unchecked")
                 Map<String, String> stringsConnectorConfig = (Map<String, String>) newConnectorConfig;
-                connectorConfigs.put(connectorName, stringsConnectorConfig);
+                connectorConfig = connectorConfigs.put(connectorName, stringsConnectorConfig);
 
                 // Set the initial state of the connector to STARTED, which ensures that any connectors
                 // which were created with 0.9 Connect will be initialized in the STARTED state.
@@ -882,7 +883,7 @@ public class KafkaConfigBackingStore implements ConfigBackingStore {
             if (removed)
                 updateListener.onConnectorConfigRemove(connectorName);
             else
-                updateListener.onConnectorConfigUpdate(connectorName);
+                updateListener.onConnectorConfigUpdate(connectorName, connectorConfig);
         }
     }
 

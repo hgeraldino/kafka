@@ -2062,7 +2062,7 @@ public class DistributedHerder extends AbstractHerder implements Runnable {
         }
 
         @Override
-        public void onConnectorConfigUpdate(String connector) {
+        public void onConnectorConfigUpdate(String connector, Map<String, String> currentConnectorConfig) {
             log.info("Connector {} config updated", connector);
 
             // Stage the update and wake up the work thread. Connector config *changes* only need the one connector

@@ -261,13 +261,13 @@ public class KafkaConfigBackingStoreTest {
         expectConvertWriteAndRead(
                 CONNECTOR_CONFIG_KEYS.get(0), KafkaConfigBackingStore.CONNECTOR_CONFIGURATION_V0, CONFIGS_SERIALIZED.get(0),
                 "properties", SAMPLE_CONFIGS.get(0));
-        configUpdateListener.onConnectorConfigUpdate(CONNECTOR_IDS.get(0));
+        configUpdateListener.onConnectorConfigUpdate(CONNECTOR_IDS.get(0), null);
         EasyMock.expectLastCall();
 
         expectConvertWriteAndRead(
                 CONNECTOR_CONFIG_KEYS.get(1), KafkaConfigBackingStore.CONNECTOR_CONFIGURATION_V0, CONFIGS_SERIALIZED.get(1),
                 "properties", SAMPLE_CONFIGS.get(1));
-        configUpdateListener.onConnectorConfigUpdate(CONNECTOR_IDS.get(1));
+        configUpdateListener.onConnectorConfigUpdate(CONNECTOR_IDS.get(1), null);
         EasyMock.expectLastCall();
 
         // Config deletion
@@ -369,7 +369,7 @@ public class KafkaConfigBackingStoreTest {
         fencableProducer.commitTransaction();
         EasyMock.expectLastCall();
         expectConvertRead(CONNECTOR_CONFIG_KEYS.get(1), CONNECTOR_CONFIG_STRUCTS.get(0), CONFIGS_SERIALIZED.get(2));
-        configUpdateListener.onConnectorConfigUpdate(CONNECTOR_IDS.get(1));
+        configUpdateListener.onConnectorConfigUpdate(CONNECTOR_IDS.get(1), null);
         EasyMock.expectLastCall();
 
         expectPartitionCount(1);

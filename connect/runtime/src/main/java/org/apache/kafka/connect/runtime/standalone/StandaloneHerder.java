@@ -449,7 +449,7 @@ public class StandaloneHerder extends AbstractHerder {
         }
 
         @Override
-        public void onConnectorConfigUpdate(String connector) {
+        public void onConnectorConfigUpdate(String connector, Map<String, String> currentConnectorConfig) {
             // TODO: move connector configuration update handling here to be consistent with
             //       the semantics of the config backing store
 

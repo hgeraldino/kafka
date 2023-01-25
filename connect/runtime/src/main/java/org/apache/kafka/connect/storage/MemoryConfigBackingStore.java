@@ -90,13 +90,16 @@ public class MemoryConfigBackingStore implements ConfigBackingStore {
     @Override
     public synchronized void putConnectorConfig(String connector, Map<String, String> properties) {
         ConnectorState state = connectors.get(connector);
+        Map<String, String> currentConnectorConfig = null;
         if (state == null)
             connectors.put(connector, new ConnectorState(properties));
-        else
+        else {
+            currentConnectorConfig = new HashMap<>(state.connConfig);
             state.connConfig = properties;
+        }
 
         if (updateListener != null)
-            updateListener.onConnectorConfigUpdate(connector);
+            updateListener.onConnectorConfigUpdate(connector, currentConnectorConfig);
     }
 
     @Override

@@ -1831,7 +1831,7 @@ public class DistributedHerderTest extends ThreadedTest {
         PowerMock.replayAll();
 
         herder.tick(); // join
-        configUpdateListener.onConnectorConfigUpdate(CONN1); // read updated config
+        configUpdateListener.onConnectorConfigUpdate(CONN1, Collections.emptyMap()); // read updated config
         herder.tick(); // apply config
         herder.tick(); // do rebalance
 
@@ -1898,7 +1898,7 @@ public class DistributedHerderTest extends ThreadedTest {
         PowerMock.replayAll();
 
         herder.tick(); // join
-        configUpdateListener.onConnectorConfigUpdate(CONN1); // read updated config
+        configUpdateListener.onConnectorConfigUpdate(CONN1, Collections.emptyMap()); // read updated config
         herder.tick(); // apply config
         herder.tick();
 
@@ -2563,7 +2563,7 @@ public class DistributedHerderTest extends ThreadedTest {
         configBackingStore.putConnectorConfig(CONN1, CONN1_CONFIG_UPDATED);
         PowerMock.expectLastCall().andAnswer(() -> {
             // Simulate response to writing config + waiting until end of log to be read
-            configUpdateListener.onConnectorConfigUpdate(CONN1);
+            configUpdateListener.onConnectorConfigUpdate(CONN1, Collections.emptyMap());
             return null;
         });
         // As a result of reconfig, should need to update snapshot. With only connector updates, we'll just restart
